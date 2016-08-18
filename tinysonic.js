@@ -1,6 +1,8 @@
 'use strict'
 
 function tinysonic (string) {
+  string = string.toString()
+
   var result = {}
   var key = ''
   var parsingKey = true
