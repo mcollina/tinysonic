@@ -1,4 +1,5 @@
-# tinysonic
+# tinysonic&nbsp;&nbsp;[![Build Status](https://travis-ci.org/mcollina/tinysonic.svg)](https://travis-ci.org/mcollina/tinysonic)
+
 
 A quick syntax for JSON objects. Heavily inspired by
 [jsonic](https://github.com/rjrodger/jsonic), but simpler.
@@ -19,6 +20,12 @@ var tinysonic = require('tinysonic')
 console.log(tinysonic('hello:world'))
 console.log(tinysonic('a:b,c:d'))
 ```
+
+## API
+
+### tinysonic(string)
+
+Returns `null` if it fails parsing.
 
 ## Syntax
 

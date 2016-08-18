@@ -18,3 +18,6 @@ check('a:42', { a: 42 })
 check('hello:world', { hello: 'world' })
 check('hello:world\n', { hello: 'world' })
 check(new Buffer('a:b'), { a: 'b' })
+
+check({ an: 'object' }, null)
+check(42, null)

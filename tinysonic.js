@@ -1,6 +1,10 @@
 'use strict'
 
 function tinysonic (string) {
+  if (typeof string !== 'string' && !(string instanceof Buffer)) {
+    return null
+  }
+
   string = string.toString()
 
   var result = {}
