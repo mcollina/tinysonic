@@ -1,7 +1,7 @@
 'use strict'
 
 var test = require('tape')
-var tinysonic = require('.')
+var tinysonic = require('./')
 
 function check (string, object) {
   test('check that ' + JSON.stringify(string) + ' is parsed to ' + JSON.stringify(object), function (t) {
