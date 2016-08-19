@@ -27,6 +27,7 @@ function tinysonic (string) {
       result[key] = {}
       stack.unshift(result)
       result = result[key]
+      key = ''
       parsingKey = true
       last = i + 1
     } else if (string.charAt(i) === '}') {
@@ -50,6 +51,8 @@ function tinysonic (string) {
 
   if (!parsingKey) {
     result[key] = asValue(string.slice(last, i).trim())
+  } else if (key.length === 0 && string.charAt(string.length - 1) !== '}') {
+    result = null
   }
 
   return result
