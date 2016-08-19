@@ -19,6 +19,7 @@ var tinysonic = require('tinysonic')
 
 console.log(tinysonic('hello:world'))
 console.log(tinysonic('a:b,c:d'))
+console.log(tinysonic('hello:world,my:{world:data}'))
 ```
 
 ## API
@@ -35,6 +36,7 @@ The full syntax is:
 * multiple pairs are separated by `,`
 * each key or value are trimmed for spaces
 * numbers are parsed as numbers
+* you can wrap objects with `{` and `}`
 
 ## License
 

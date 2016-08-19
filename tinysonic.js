@@ -7,6 +7,7 @@ function tinysonic (string) {
 
   string = string.toString()
 
+  var stack = []
   var result = {}
   var key = ''
   var parsingKey = true
@@ -18,14 +19,32 @@ function tinysonic (string) {
         key = string.slice(last, i).trim()
         last = i + 1
         parsingKey = false
+      } else if (string.charAt(i) === '{') {
+        // break out, not valid
+        return null
       }
-    } else {
-      if (string.charAt(i) === ',') {
-        result[key] = asValue(string.slice(last, i).trim())
+    } else if (string.charAt(i) === '{') {
+      result[key] = {}
+      stack.unshift(result)
+      result = result[key]
+      parsingKey = true
+      last = i + 1
+    } else if (string.charAt(i) === '}') {
+      result[key] = asValue(string.slice(last, i).trim())
+      key = ''
+      parsingKey = true
+      while (string.charAt(i) === '}') {
+        result = stack.shift()
         last = i + 1
-        parsingKey = true
-        key = ''
+        for (i++; i < string.length && (string.charAt(i) === ' ' || string.charAt(i) === ','); i++) {
+          last = i + 1
+        }
       }
+    } else if (string.charAt(i) === ',') {
+      result[key] = asValue(string.slice(last, i).trim())
+      last = i + 1
+      parsingKey = true
+      key = ''
     }
   }
 

@@ -19,5 +19,12 @@ check('hello:world', { hello: 'world' })
 check('hello:world\n', { hello: 'world' })
 check(new Buffer('a:b'), { a: 'b' })
 
+check('a:b,c:{d:e}', { a: 'b', c: { d: 'e' } })
+
+check('c:{d:e},a:b', { a: 'b', c: { d: 'e' } })
+
+check('c:{d:e,f:{g:h}},a:b', { a: 'b', c: { d: 'e', f: { g: 'h' } } })
+
 check({ an: 'object' }, null)
 check(42, null)
+check('{d:e}:b,a:b', null)
