@@ -59,6 +59,11 @@ function tinysonic (string) {
 }
 
 function asValue (str) {
+  if (str === 'true') {
+    return true
+  } else if (str === 'false') {
+    return false
+  }
   var number = parseFloat(str)
   if (isNaN(number)) {
     return str
