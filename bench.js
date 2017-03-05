@@ -13,6 +13,10 @@ suite.add('tinysonic', function () {
   tinysonic('hello:world,answer:42')
 })
 
+suite.add('JSON', function () {
+  JSON.parse('{ "hello": "world", "answer": "42" }')
+})
+
 suite.on('cycle', cycle)
 
 suite.run()

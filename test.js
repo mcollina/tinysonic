@@ -36,4 +36,3 @@ check('a:b,c', null)
 check('a:b,c:', { a: 'b', c: '' })
 check('a:b,', null)
 check('', null)
-
