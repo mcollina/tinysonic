@@ -36,3 +36,8 @@ check('a:b,c', null)
 check('a:b,c:', { a: 'b', c: '' })
 check('a:b,', null)
 check('', null)
+
+check('a:a,b:b,c:59b6f', { a: 'a', b: 'b', c: '59b6f' })
+check('a:a,b:b,c:ddd43', { a: 'a', b: 'b', c: 'ddd43' })
+check('a:null', { a: null })
+check('a:undefined', { a: undefined })
