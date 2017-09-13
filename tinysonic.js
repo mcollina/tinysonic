@@ -63,12 +63,20 @@ function asValue (str) {
     return true
   } else if (str === 'false') {
     return false
+  } else if (str === 'null') {
+    return null
+  } else if (str === 'undefined') {
+    return undefined
   }
-  var number = parseFloat(str)
-  if (isNaN(number)) {
+
+  if (!isNaN(str)) {
+    var number = parseFloat(str)
+    if (!isNaN(number)) {
+      return number
+    }
     return str
   } else {
-    return number
+    return str
   }
 }
 
