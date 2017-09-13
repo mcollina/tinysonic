@@ -1,5 +1,6 @@
 'use strict'
 
+var Buffer = require('safe-buffer').Buffer
 var test = require('tape')
 var tinysonic = require('./')
 
@@ -19,7 +20,7 @@ check('a:true', { a: true })
 check('a:false', { a: false })
 check('hello:world', { hello: 'world' })
 check('hello:world\n', { hello: 'world' })
-check(new Buffer('a:b'), { a: 'b' })
+check(Buffer.from('a:b'), { a: 'b' })
 
 check('a:b,c:{d:e}', { a: 'b', c: { d: 'e' } })
 
