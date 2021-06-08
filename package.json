@@ -1,0 +1,39 @@
+{
+  "name": "tinysonic",
+  "version": "1.3.0",
+  "description": "a quick syntax for JSON",
+  "main": "tinysonic.js",
+  "scripts": {
+    "test": "standard && tape test.js | tap-spec"
+  },
+  "pre-commit": "test",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcollina/tinysonic.git"
+  },
+  "keywords": [
+    "json",
+    "jsonic",
+    "flat",
+    "object"
+  ],
+  "author": "Matteo Collina <hello@matteocollina.com>",
+  "collaborators": [
+    "Jairus Tanaka <jairus.v.tanaka@outlook.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mcollina/tinysonic/issues"
+  },
+  "homepage": "https://github.com/mcollina/tinysonic#readme",
+  "devDependencies": {
+    "benchmark": "^2.1.4",
+    "eslint": "^7.28.0",
+    "jsonic": "^0.3.0",
+    "pre-commit": "^1.1.3",
+    "safe-buffer": "^5.2.1",
+    "standard": "^10.0.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.8.0"
+  }
+}
