@@ -18,6 +18,9 @@
     "object"
   ],
   "author": "Matteo Collina <hello@matteocollina.com>",
+  "collaborators": [
+    "Jairus Tanaka <jairus.v.tanaka@outlook.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mcollina/tinysonic/issues"
@@ -25,9 +28,10 @@
   "homepage": "https://github.com/mcollina/tinysonic#readme",
   "devDependencies": {
     "benchmark": "^2.1.4",
+    "eslint": "^7.28.0",
     "jsonic": "^0.3.0",
     "pre-commit": "^1.1.3",
-    "safe-buffer": "^5.1.1",
+    "safe-buffer": "^5.2.1",
     "standard": "^10.0.0",
     "tap-spec": "^4.1.1",
     "tape": "^4.8.0"

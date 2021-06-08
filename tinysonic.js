@@ -1,6 +1,6 @@
 'use strict'
 
-function tinysonic (string) {
+function parse (string) {
   if (typeof string !== 'string' && !(string instanceof Buffer)) {
     return null
   }
@@ -37,7 +37,12 @@ function tinysonic (string) {
       while (string.charAt(i) === '}') {
         result = stack.shift()
         last = i + 1
-        for (i++; i < string.length && (string.charAt(i) === ' ' || string.charAt(i) === ','); i++) {
+        for (
+          i++;
+          i < string.length &&
+          (string.charAt(i) === ' ' || string.charAt(i) === ',');
+          i++
+        ) {
           last = i + 1
         }
       }
@@ -51,7 +56,7 @@ function tinysonic (string) {
 
   if (!parsingKey) {
     result[key] = asValue(string.slice(last, i).trim())
-  } else if (key.length === 0 && string.charAt(string.length - 1) !== '}') {
+  } else if (key.length === 0 && string.charAt(string.legth - 1) !== '}') {
     result = null
   }
 
@@ -80,4 +85,74 @@ function asValue (str) {
   }
 }
 
-module.exports = tinysonic
+// Stringify function authored by Jairus Tanaka
+
+// Pre-alloc in memory. (faster)
+const nullVal = `null`
+// Much faster if functions are split up by types.
+function fromString (data) {
+  return `${data}`
+}
+
+function fromNumber (data) {
+  return `${data}`
+}
+
+const fromObject = (data) => {
+  const keys = Object.keys(data)
+  const len = keys.length - 1
+  if (len === -1) {
+    return '{}'
+  }
+  let result = '{'
+  const lastKey = keys.pop()
+  // Just loop through all the keys and stringify them.
+  let key
+  for (key of keys) {
+    // Iterate through all but the last. (To keep the commas clean)
+    result += `${stringifyChunk(key)}:${stringifyChunk(data[key])},`
+  }
+  result += `${stringifyChunk(lastKey)}:${stringifyChunk(data[lastKey])}}`
+
+  return result
+}
+
+function stringifyChunk (data) {
+  let result = ''
+  if (typeof data === 'string') {
+    result += fromString(data)
+  } else if (data instanceof Object) {
+    result += fromObject(data)
+  } else if (Number.isFinite(data)) {
+    result += fromNumber(data)
+  } else if (data === true || data === false) {
+    result += data ? `true` : `false`
+  } else {
+    result += nullVal
+  }
+
+  return result
+}
+
+function stringify (data) {
+  let result = ''
+  if (typeof data === 'string') {
+    result += fromString(data)
+  } else if (data instanceof Object) {
+    result += fromObject(data)
+  } else if (Number.isFinite(data)) {
+    result += fromNumber(data)
+  } else if (data === true || data === false) {
+    result += data ? `true` : `false`
+  } else {
+    result += nullVal
+  }
+
+  return result.slice(1, result.length - 1)
+}
+
+parse.stringify = stringify
+
+parse.parse = parse
+
+module.exports = parse
