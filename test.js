@@ -12,6 +12,14 @@ function check (string, object) {
   })
 }
 
+function checkStringify (object, string) {
+  test('check that ' + JSON.stringify(string) + ' is stringified to ' + JSON.stringify(object), function (t) {
+    t.plan(1)
+
+    t.deepEqual(tinysonic.stringify(object), string, 'matches')
+  })
+}
+
 check('a:b', { a: 'b' })
 check('a:b,c:d', { a: 'b', c: 'd' })
 check('a: b, c: d', { a: 'b', c: 'd' })
@@ -21,8 +29,6 @@ check('a:false', { a: false })
 check('hello:world', { hello: 'world' })
 check('hello:world\n', { hello: 'world' })
 check(Buffer.from('a:b'), { a: 'b' })
-
-check('a:b,c:{d:e}', { a: 'b', c: { d: 'e' } })
 
 check('c:{d:e},a:b', { a: 'b', c: { d: 'e' } })
 
@@ -44,3 +50,18 @@ check('a:null', { a: null })
 check('a:undefined', { a: undefined })
 check('a:4.5', { a: 4.5 })
 check('a:314e-2', { a: 3.14 })
+
+// Stringify testing
+checkStringify({ a: 'b' }, 'a:b')
+checkStringify({ a: 'b', c: 'd' }, 'a:b,c:d')
+checkStringify({ a: 'b', c: 'd' }, 'a:b,c:d')
+checkStringify({ a: 42 }, 'a:42')
+checkStringify({ a: true }, 'a:true')
+checkStringify({ a: false }, 'a:false')
+checkStringify({ hello: 'world' }, 'hello:world')
+
+checkStringify({ a: 'b', c: { d: 'e' } }, 'a:b,c:{d:e}')
+
+checkStringify({ a: 'b', c: { d: 'e', f: { g: 'h' } } }, 'a:b,c:{d:e,f:{g:h}}')
+
+checkStringify({ a: 'b', c: '' }, 'a:b,c:')
