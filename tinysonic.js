@@ -1,5 +1,7 @@
 'use strict'
 
+const clones = require('clones')
+
 function parse (string) {
   if (typeof string !== 'string' && !(string instanceof Buffer)) {
     return null
@@ -154,6 +156,6 @@ function stringify (data) {
 
 parse.stringify = stringify
 
-parse.parse = parse
-
+parse.parse = clones(parse)
+// Circular stuff really cut the performance. Using `clones` bumps it back up.
 module.exports = parse
