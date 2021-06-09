@@ -1,6 +1,6 @@
 'use strict'
 
-var tinysonic = require('./')
+const tinysonic = require('./')
 
 console.log(tinysonic('hello:world'))
 console.log(tinysonic('a:b,c:d'))

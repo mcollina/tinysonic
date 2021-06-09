@@ -1,8 +1,8 @@
 'use strict'
 
-var Buffer = require('safe-buffer').Buffer
-var test = require('tape')
-var tinysonic = require('./')
+const Buffer = require('safe-buffer').Buffer
+const test = require('tape')
+const tinysonic = require('./')
 
 function check (string, object) {
   test('check that ' + JSON.stringify(string) + ' is parsed to ' + JSON.stringify(object), function (t) {

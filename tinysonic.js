@@ -7,13 +7,14 @@ function parse (string) {
 
   string = string.toString()
 
-  var stack = []
-  var result = {}
-  var key = ''
-  var parsingKey = true
-  var last = 0
+  const stack = []
+  let result = {}
+  let key = ''
+  let parsingKey = true
+  let last = 0
+  let i
 
-  for (var i = 0; i < string.length; i++) {
+  for (i = 0; i < string.length; i++) {
     if (parsingKey) {
       if (string.charAt(i) === ':') {
         key = string.slice(last, i).trim()
@@ -75,7 +76,7 @@ function asValue (str) {
   }
 
   if (!isNaN(str)) {
-    var number = parseFloat(str)
+    const number = parseFloat(str)
     if (!isNaN(number)) {
       return number
     }
@@ -88,7 +89,7 @@ function asValue (str) {
 // Stringify function authored by Jairus Tanaka
 
 // Pre-alloc in memory. (faster)
-const nullVal = `null`
+const nullVal = 'null'
 // Much faster if functions are split up by types.
 function fromString (data) {
   return `${data}`
@@ -126,7 +127,7 @@ function stringifyChunk (data) {
   } else if (Number.isFinite(data)) {
     result += fromNumber(data)
   } else if (data === true || data === false) {
-    result += data ? `true` : `false`
+    result += data ? 'true' : 'false'
   } else {
     result += nullVal
   }
@@ -143,7 +144,7 @@ function stringify (data) {
   } else if (Number.isFinite(data)) {
     result += fromNumber(data)
   } else if (data === true || data === false) {
-    result += data ? `true` : `false`
+    result += data ? 'true' : 'false'
   } else {
     result += nullVal
   }
