@@ -1,4 +1,4 @@
-# tinysonic&nbsp;&nbsp;[![CI](https://github.com/mcollina/tinysonic/actions/workflows/ci.yml/badge.svg)](https://github.com/mcollina/tinysonic/actions/workflows/ci.yml)
+# tinysonic&nbsp;&nbsp;[![Build Status](https://travis-ci.org/mcollina/tinysonic.svg)](https://travis-ci.org/mcollina/tinysonic)
 
 
 A quick syntax for JSON objects. Heavily inspired by
@@ -17,10 +17,21 @@ $ npm install tinysonic --save
 
 var tinysonic = require('tinysonic')
 
-console.log(tinysonic('hello:world'))
-console.log(tinysonic('a:b,c:d'))
-console.log(tinysonic('hello:world,my:{world:data}'))
-console.log(tinysonic('a:true,c:d'))
+const encoded = tinysonic.stringify({
+    hello: 'world',
+    my: {
+        world: 'data'
+    }
+})
+
+console.log('Encoded: ', encoded)
+// Encoded: 'hello:world,my:{world:data}'
+
+const decoded = tinysonic.parse(encoded)
+
+console.log('Decoded: ', decoded)
+// Decoded: { hello: 'world', my: { world: 'data' } }
+
 ```
 
 ## API
@@ -28,6 +39,12 @@ console.log(tinysonic('a:true,c:d'))
 ### tinysonic(string)
 
 Returns `null` if it fails parsing.
+
+### tinysonic.parse(string)
+Parses the tinysonic encoded string
+
+### tinysonic.stringify(any)
+Stringifies data into tinysonic string
 
 ## Syntax
 
