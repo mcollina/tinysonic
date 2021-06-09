@@ -34,6 +34,8 @@ check('c:{d:e},a:b', { a: 'b', c: { d: 'e' } })
 
 check('c:{d:e,f:{g:h}},a:b', { a: 'b', c: { d: 'e', f: { g: 'h' } } })
 
+check('hello:world,my:{world:data}', { hello: 'world', my: { world: 'data' } })
+
 check({ an: 'object' }, null)
 check(42, null)
 check('{d:e}:b,a:b', null)
