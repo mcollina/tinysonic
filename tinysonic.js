@@ -157,5 +157,5 @@ function stringify (data) {
 parse.stringify = stringify
 
 parse.parse = clones(parse)
-// Circular stuff really cut the performance. Using `clones` bumps it back up.
+
 module.exports = parse
