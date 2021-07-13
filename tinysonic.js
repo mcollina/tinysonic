@@ -57,7 +57,7 @@ function parse (string) {
 
   if (!parsingKey) {
     result[key] = asValue(string.slice(last, i).trim())
-  } else if (key.length === 0 && string.charAt(string.legth - 1) !== '}') {
+  } else if (key.length === 0 && string.charAt(string.length - 1) !== '}') {
     result = null
   }
 
