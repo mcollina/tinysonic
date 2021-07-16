@@ -1,4 +1,4 @@
-# tinysonic&nbsp;&nbsp;[![Build Status](https://travis-ci.org/mcollina/tinysonic.svg)](https://travis-ci.org/mcollina/tinysonic)
+# tinysonic
 
 
 A quick syntax for JSON objects. Heavily inspired by
