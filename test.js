@@ -28,6 +28,7 @@ check('a:true', { a: true })
 check('a:false', { a: false })
 check('hello:world', { hello: 'world' })
 check('hello:world\n', { hello: 'world' })
+check('hello:world,my:{world:data}', { hello: 'world', my: { world: 'data' } })
 check(Buffer.from('a:b'), { a: 'b' })
 
 check('c:{d:e},a:b', { a: 'b', c: { d: 'e' } })
