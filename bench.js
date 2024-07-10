@@ -7,7 +7,7 @@ const suite = new benchmark.Suite()
 
 const obj = {
   hello: 'world',
-  answer: 42
+  answer: 42,
 }
 
 suite.add('Jsonic Parse', function () {

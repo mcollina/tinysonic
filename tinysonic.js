@@ -75,15 +75,15 @@ function asValue (str) {
     return undefined
   }
 
-  if (!isNaN(str)) {
-    const number = parseFloat(str)
-    if (!isNaN(number)) {
+  if (!Number.isNaN(Number(str))) {
+    const number = Number.parseFloat(str)
+    if (!Number.isNaN(number)) {
       return number
     }
     return str
-  } else {
-    return str
   }
+
+  return str
 }
 
 // Stringify function authored by Jairus Tanaka
