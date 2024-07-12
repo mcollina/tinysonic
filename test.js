@@ -1,22 +1,18 @@
 'use strict'
 
-const Buffer = require('safe-buffer').Buffer
-const test = require('tape')
+const test = require('node:test')
+const { deepEqual } = require('node:assert/strict')
 const tinysonic = require('./')
 
 function check (string, object) {
-  test('check that ' + JSON.stringify(string) + ' is parsed to ' + JSON.stringify(object), function (t) {
-    t.plan(1)
-
-    t.deepEqual(tinysonic(string), object, 'matches')
+  test('check that ' + JSON.stringify(string) + ' is parsed to ' + JSON.stringify(object), function () {
+    deepEqual(tinysonic(string), object, 'matches')
   })
 }
 
 function checkStringify (object, string) {
-  test('check that ' + JSON.stringify(string) + ' is stringified to ' + JSON.stringify(object), function (t) {
-    t.plan(1)
-
-    t.deepEqual(tinysonic.stringify(object), string, 'matches')
+  test('check that ' + JSON.stringify(string) + ' is stringified to ' + JSON.stringify(object), function () {
+    deepEqual(tinysonic.stringify(object), string, 'matches')
   })
 }
 
