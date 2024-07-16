@@ -36,15 +36,15 @@ console.log('Decoded: ', decoded)
 
 ## API
 
-### tinysonic(string)
+### tinysonic.parse(string/buffer)
+Parses a tinysonic encoded string. Returns `null` if it fails parsing.
 
-Returns `null` if it fails parsing.
+### tinysonic.stringify(object)
+Stringifies a js object into a tinysonic string. Returns `null` on error.
 
-### tinysonic.parse(string)
-Parses the tinysonic encoded string
+### tinysonic(string/buffer)
+Alternative for `tinysonic.parse()`
 
-### tinysonic.stringify(any)
-Stringifies data into tinysonic string
 
 ## Syntax
 
@@ -54,6 +54,7 @@ The full syntax is:
 * multiple pairs are separated by `,`
 * each key or value are trimmed for spaces
 * numbers are parsed as numbers
+* null are parsed as `null`
 * booleans are parsed as booleans, e.g. `true` and `false`
 * you can wrap objects with `{` and `}`
 

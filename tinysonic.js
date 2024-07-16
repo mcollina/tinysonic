@@ -1,159 +1,142 @@
 'use strict'
 
 function parse (string) {
-  if (typeof string !== 'string' && !(string instanceof Buffer)) {
+  if (string instanceof Buffer) {
+    string = string.toString()
+  }
+  if (typeof string !== 'string') {
+    // Err: we can only parse strings
     return null
   }
-
-  string = string.toString()
 
   const stack = []
   let result = {}
   let key = ''
   let parsingKey = true
   let last = 0
-  let i
-
-  for (i = 0; i < string.length; i++) {
+  let i = 0
+  const strlen = string.length
+  while (i < strlen) {
+    const char = string[i]
     if (parsingKey) {
-      if (string.charAt(i) === ':') {
-        key = string.slice(last, i).trim()
+      if (char === ':') {
+        key = string.substring(last, i).trim()
         last = i + 1
         parsingKey = false
-      } else if (string.charAt(i) === '{') {
-        // break out, not valid
+      } else if (char === '{') {
+        // Err: a key can only be a string
         return null
       }
-    } else if (string.charAt(i) === '{') {
+    } else if (char === '{') {
       result[key] = {}
-      stack.unshift(result)
+      stack.push(result)
       result = result[key]
       key = ''
       parsingKey = true
       last = i + 1
-    } else if (string.charAt(i) === '}') {
-      result[key] = asValue(string.slice(last, i).trim())
+    } else if (char === '}') {
+      result[key] = asValue(string.substring(last, i).trim())
       key = ''
       parsingKey = true
-      while (string.charAt(i) === '}') {
-        result = stack.shift()
-        last = i + 1
-        for (
-          i++;
-          i < string.length &&
-          (string.charAt(i) === ' ' || string.charAt(i) === ',');
+      while (string[i] === '}') {
+        result = stack.pop()
+        i++
+        while (i < strlen && (string[i] === ' ' || string[i] === ',')) {
           i++
-        ) {
-          last = i + 1
         }
+        last = i
       }
-    } else if (string.charAt(i) === ',') {
-      result[key] = asValue(string.slice(last, i).trim())
+    } else if (char === ',') {
+      result[key] = asValue(string.substring(last, i).trim())
       last = i + 1
       parsingKey = true
       key = ''
     }
+    i++
   }
 
   if (!parsingKey) {
-    result[key] = asValue(string.slice(last, i).trim())
-  } else if (key.length === 0 && string.charAt(string.length - 1) !== '}') {
-    result = null
+    result[key] = asValue(string.substring(last).trim())
+  } else if (key.length === 0 && string[strlen - 1] !== '}') {
+    // Err: cant end input with a key, need a val or a ctrl char
+    return null
   }
 
   return result
 }
 
 function asValue (str) {
-  if (str === 'true') {
-    return true
-  } else if (str === 'false') {
-    return false
-  } else if (str === 'null') {
-    return null
-  } else if (str === 'undefined') {
-    return undefined
-  }
-
-  if (!Number.isNaN(Number(str))) {
-    const number = Number.parseFloat(str)
-    if (!Number.isNaN(number)) {
-      return number
+  switch (str) {
+    case 'true':
+      return true
+    case 'false':
+      return false
+    case 'null':
+      return null
+    case 'undefined':
+      return undefined
+    default: {
+      if (Number.isNaN(Number(str))) {
+        return str
+      }
+      const number = Number.parseFloat(str)
+      return Number.isNaN(number)
+        ? str
+        : number
     }
-    return str
+  }
+}
+
+function stringify (data) {
+  if (!(data instanceof Object)) {
+    return null
   }
 
-  return str
-}
-
-// Stringify function authored by Jairus Tanaka
-
-// Pre-alloc in memory. (faster)
-const nullVal = 'null'
-// Much faster if functions are split up by types.
-function fromString (data) {
-  return `${data}`
-}
-
-function fromNumber (data) {
-  return `${data}`
-}
-
-const fromObject = (data) => {
   const keys = Object.keys(data)
   const len = keys.length - 1
   if (len === -1) {
-    return '{}'
+    return ''
   }
-  let result = '{'
+  let result = ''
   const lastKey = keys.pop()
-  // Just loop through all the keys and stringify them.
   let key
   for (key of keys) {
-    // Iterate through all but the last. (To keep the commas clean)
-    result += `${stringifyChunk(key)}:${stringifyChunk(data[key])},`
+    result += `${key}:${stringifyChunk(data[key])},`
   }
-  result += `${stringifyChunk(lastKey)}:${stringifyChunk(data[lastKey])}}`
+  result += `${lastKey}:${stringifyChunk(data[lastKey])}`
 
   return result
 }
 
 function stringifyChunk (data) {
-  let result = ''
   if (typeof data === 'string') {
-    result += fromString(data)
-  } else if (data instanceof Object) {
-    result += fromObject(data)
-  } else if (Number.isFinite(data)) {
-    result += fromNumber(data)
-  } else if (data === true || data === false) {
-    result += data ? 'true' : 'false'
-  } else {
-    result += nullVal
+    return data
+  } if (data instanceof Object) {
+    return fromObject(data)
+  } if (Number.isFinite(data)) {
+    return `${data}`
+  } if (data === true || data === false) {
+    return !!data
   }
+  return null
+}
+
+const fromObject = (data) => {
+  const keys = Object.keys(data)
+  if (keys.length - 1 === -1) {
+    return '{}'
+  }
+  let result = '{'
+  const lastKey = keys.pop()
+  for (const key of keys) {
+    result += `${key}:${stringifyChunk(data[key])},`
+  }
+  result += `${lastKey}:${stringifyChunk(data[lastKey])}}`
 
   return result
 }
 
-function stringify (data) {
-  let result = ''
-  if (typeof data === 'string') {
-    result += fromString(data)
-  } else if (data instanceof Object) {
-    result += fromObject(data)
-  } else if (Number.isFinite(data)) {
-    result += fromNumber(data)
-  } else if (data === true || data === false) {
-    result += data ? 'true' : 'false'
-  } else {
-    result += nullVal
-  }
-
-  return result.slice(1, result.length - 1)
-}
-
 parse.stringify = stringify
-
 parse.parse = parse
 
 module.exports = parse

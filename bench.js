@@ -10,27 +10,27 @@ const obj = {
   answer: 42,
 }
 
-suite.add('Jsonic Parse', function () {
+suite.add('Jsonic Parse', () => {
   jsonic('hello:world,answer:42')
 })
 
-suite.add('TinySonic Parse', function () {
+suite.add('TinySonic Parse', () => {
   tinysonic('hello:world,answer:42')
 })
 
-suite.add('JSON Parse', function () {
-  JSON.parse('{ "hello": "world", "answer": "42" }')
+suite.add('JSON Parse', () => {
+  JSON.parse('{"hello":"world","answer":"42"}')
 })
 
-suite.add('Jsonic Stringify', function () {
+suite.add('Jsonic Stringify', () => {
   jsonic.stringify(obj)
 })
 
-suite.add('TinySonic Stringify', function () {
+suite.add('TinySonic Stringify', () => {
   tinysonic.stringify(obj)
 })
 
-suite.add('JSON Stringify', function () {
+suite.add('JSON Stringify', () => {
   JSON.stringify(obj)
 })
 
