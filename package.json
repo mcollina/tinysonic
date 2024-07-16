@@ -1,6 +1,6 @@
 {
   "name": "tinysonic",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "a quick syntax for JSON",
   "main": "tinysonic.js",
   "scripts": {
